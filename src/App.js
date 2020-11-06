@@ -24,6 +24,12 @@ class App extends React.Component {
     }
 
     theFetch = () => {
+
+        this.setState({
+            isLoaded: false,
+            isLoaded2: false,
+        })
+
         fetch('https://corporatebs-generator.sameerkumar.website/')
             .then(res => res.json())
             .then(json => {
@@ -47,6 +53,7 @@ class App extends React.Component {
             }).catch((err) => {
                 console.log(err);
             });
+
     }
 
     componentDidMount() {
