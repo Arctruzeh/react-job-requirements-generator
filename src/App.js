@@ -1,12 +1,6 @@
 import React from 'react'
 import './all.css'
 
-function randomSearch(items) {
-
-    return items[Math.floor(Math.random() * items.length)]
-
-}
-
 class App extends React.Component {
 
     constructor(props) {
@@ -25,6 +19,10 @@ class App extends React.Component {
 
     }
 
+    randomSearch = (items) => {
+        return items[Math.floor(Math.random() * items.length)]
+    }
+
     theFetch = () => {
         fetch('https://corporatebs-generator.sameerkumar.website/')
             .then(res => res.json())
@@ -37,7 +35,7 @@ class App extends React.Component {
                 console.log(err);
             });
 
-        fetch(`https://pixabay.com/api/?key=15416997-ea9683b19c946a25c1f0b4d67&q=${randomSearch(this.state.search)}&image_type=photo&pretty=true`)
+        fetch(`https://pixabay.com/api/?key=15416997-ea9683b19c946a25c1f0b4d67&q=${this.randomSearch(this.state.search)}&image_type=photo&pretty=true`)
             .then(res => res.json())
             .then(json => {
                 const rndNumb = Math.floor((Math.random() * json.hits.length))
