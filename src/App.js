@@ -25,7 +25,7 @@ class App extends React.Component {
 
     }
 
-    refresh = () => {
+    theFetch = () => {
         fetch('https://corporatebs-generator.sameerkumar.website/')
             .then(res => res.json())
             .then(json => {
@@ -52,31 +52,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-
-        fetch('https://corporatebs-generator.sameerkumar.website/')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    items: json,
-                    isLoaded: true,
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
-
-        fetch(`https://pixabay.com/api/?key=15416997-ea9683b19c946a25c1f0b4d67&q=${randomSearch(this.state.search)}&image_type=photo&pretty=true`)
-            .then(res => res.json())
-            .then(json => {
-                const rndNumb = Math.floor((Math.random() * json.hits.length))
-                this.setState({
-                    items2: json,
-                    isLoaded2: true,
-                    imgUrl: json.hits[rndNumb].largeImageURL
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
-
+        this.theFetch()
     }
 
     render() {
@@ -121,7 +97,7 @@ class App extends React.Component {
                     <svg
                         className="animate rotate"
                         style={svg}
-                        onClick={this.refresh}
+                        onClick={this.theFetch}
                         id="Capa_1"
                         enableBackground="new 0 0 551.13 551.13"
                         height="10%"
