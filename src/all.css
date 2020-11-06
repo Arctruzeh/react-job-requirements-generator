@@ -22,14 +22,22 @@
     align-items: center;
     border-radius: 3px;
     padding: 10px;
-    text-align: center
+
 }
 
-svg {
-    margin-top: 20px;
+.phrase {
+    font-size: 2em;
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refresh {
     transition: transform 0.5s ease;
     height: 10%;
     width: 10%;
+    flex: 1;
 }
 
 .animate {

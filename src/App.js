@@ -74,9 +74,9 @@ class App extends React.Component {
         return (
             <div style={myStyle} className="my-style">
                 <div className="my-style-2">
-                    {items.phrase}
+                    <div className="phrase">{items.phrase}</div>
                     <svg
-                        className="animate rotate"
+                        className="refresh animate rotate"
                         onClick={this.theFetch}
                         enableBackground="new 0 0 551.13 551.13"
                         viewBox="0 0 551.13 551.13"
