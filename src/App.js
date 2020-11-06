@@ -119,11 +119,11 @@ class App extends React.Component {
                 <div style={myStyle2}>
                     {items.phrase}
                     <svg
-                        class="animate rotate"
+                        className="animate rotate"
                         style={svg}
                         onClick={this.refresh}
                         id="Capa_1"
-                        enable-background="new 0 0 551.13 551.13"
+                        enableBackground="new 0 0 551.13 551.13"
                         height="10%"
                         viewBox="0 0 551.13 551.13"
                         width="10%"
