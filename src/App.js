@@ -78,7 +78,6 @@ class App extends React.Component {
                     <svg
                         className="animate rotate"
                         onClick={this.theFetch}
-                        id="Capa_1"
                         enableBackground="new 0 0 551.13 551.13"
                         viewBox="0 0 551.13 551.13"
                         xmlns="http://www.w3.org/2000/svg">
