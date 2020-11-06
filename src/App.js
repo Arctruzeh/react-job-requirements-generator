@@ -59,42 +59,17 @@ class App extends React.Component {
 
         const myStyle = {
             backgroundImage: `url(${imgUrl})`,
-            display: 'flex',
-            height: '100vh',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover'
-        }
-
-        const myStyle2 = {
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            width: '90%',
-            height: '50%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: '3px',
-            padding: '10px',
-            textAlign: 'center'
-        }
-
-        const svg = {
-            marginTop: '20px',
-            transition: 'transform 0.5s ease',
         }
 
         if (!isLoaded && !isLoaded2)
             return <div>Loading...</div>
 
         return (
-            <div style={myStyle}>
-                <div style={myStyle2}>
+            <div style={myStyle} className="my-style">
+                <div className="my-style-2">
                     {items.phrase}
                     <svg
                         className="animate rotate"
-                        style={svg}
                         onClick={this.theFetch}
                         id="Capa_1"
                         enableBackground="new 0 0 551.13 551.13"
