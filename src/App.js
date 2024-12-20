@@ -1,5 +1,6 @@
 import React from 'react'
 import './all.css'
+import { BiRefresh } from 'react-icons/bi'
 
 // Error Boundary Component
 class ErrorBoundary extends React.Component {
@@ -127,6 +128,7 @@ class App extends React.Component {
                             onClick={this.theFetch}
                             className="refresh-button"
                         >
+                            <BiRefresh className="button-icon" />
                             {this.buttonTexts[this.state.currentButtonTextIndex]}
                         </button>
                     </div>
