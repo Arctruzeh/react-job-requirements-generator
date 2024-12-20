@@ -104,7 +104,7 @@ class App extends React.Component {
                 })
                 this.prefetchNext()
             }
-        }, 400)
+        }, 1000)
     }
     componentDidMount() {
         this.theFetch()
