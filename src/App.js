@@ -1,12 +1,41 @@
 import React from 'react'
 import './all.css'
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true }
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <div className="error-message">Something went wrong. Please try again.</div>
+    }
+    return this.props.children
+  }
+}
+
 class App extends React.Component {
+    buttonTexts = [
+        "Synergize Content",
+        "Ideate Solutions",
+        "Leverage New Content",
+        "Disrupt Status Quo",
+        "Pivot Strategy",
+        "Optimize Output",
+        "Revolutionize Vision",
+        "Accelerate Growth",
+        "Transform Paradigms",
+        "Maximize Potential"
+    ]    
 
     constructor(props) {
-
-        super(props);
-
+        super(props)
         this.state = {
             key: 1,
             items: [],
@@ -14,81 +43,96 @@ class App extends React.Component {
             items2: [],
             isLoaded2: false,
             imgUrl: [],
-            search: ['work', 'job', 'corporate', 'hr', 'human resources', 'office', 'hire', 'meeting', 'board room', 'contract']
+            search: ['work', 'job', 'corporate', 'hr', 'human resources', 'office', 'hire', 'meeting', 'board room', 'contract'],
+            currentButtonTextIndex: 0,
+            nextPhrase: null,
+            nextImageUrl: null
         }
+    }
 
+    preloadImage = (url) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image()
+            img.onload = () => resolve(url)
+            img.onerror = () => reject(new Error(`Failed to load image: ${url}`))
+            img.src = url
+        })
     }
 
     randomSearch = (items) => {
         return items[Math.floor(Math.random() * items.length)]
     }
 
-    theFetch = () => {
+    prefetchNext = async () => {
+        const [bsResponse, pixabayResponse] = await Promise.all([
+            fetch('https://corporatebs-generator.sameerkumar.website/'),
+            fetch(`https://pixabay.com/api/?key=15416997-ea9683b19c946a25c1f0b4d67&q=${this.randomSearch(this.state.search)}&image_type=photo&pretty=true`)
+        ])
+
+        const bsData = await bsResponse.json()
+        const pixabayData = await pixabayResponse.json()
+        const rndNumb = Math.floor((Math.random() * pixabayData.hits.length))
+        const imageUrl = pixabayData.hits[rndNumb].largeImageURL
+
+        // Preload the next image
+        await this.preloadImage(imageUrl)
 
         this.setState({
-            isLoaded: false,
-            isLoaded2: false,
+            nextPhrase: bsData.phrase,
+            nextImageUrl: imageUrl
         })
-
-        fetch('https://corporatebs-generator.sameerkumar.website/')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    items: json,
-                    isLoaded: true,
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
-
-        fetch(`https://pixabay.com/api/?key=15416997-ea9683b19c946a25c1f0b4d67&q=${this.randomSearch(this.state.search)}&image_type=photo&pretty=true`)
-            .then(res => res.json())
-            .then(json => {
-                const rndNumb = Math.floor((Math.random() * json.hits.length))
-                this.setState({
-                    items2: json,
-                    isLoaded2: true,
-                    imgUrl: json.hits[rndNumb].largeImageURL
-                })
-            }).catch((err) => {
-                console.log(err);
-            });
-
     }
 
+    theFetch = async () => {
+        this.setState({ 
+            fadeOut: true,
+            isLoaded: false,
+            isLoaded2: false,
+            currentButtonTextIndex: (this.state.currentButtonTextIndex + 1) % this.buttonTexts.length
+        })
+        
+        setTimeout(() => {
+            if (this.state.nextPhrase && this.state.nextImageUrl) {
+                this.setState({
+                    items: { phrase: this.state.nextPhrase },
+                    imgUrl: this.state.nextImageUrl,
+                    nextPhrase: null,
+                    nextImageUrl: null,
+                    fadeOut: false,
+                    isLoaded: true,
+                    isLoaded2: true
+                })
+                this.prefetchNext()
+            }
+        }, 400)
+    }
     componentDidMount() {
         this.theFetch()
+        this.prefetchNext() // Start prefetching for next click
     }
 
     render() {
-
-        const { isLoaded, isLoaded2, items, imgUrl } = this.state;
+        const { items, imgUrl } = this.state
 
         const myStyle = {
             backgroundImage: `url(${imgUrl})`,
         }
 
-        if (!isLoaded && !isLoaded2)
-            return <div>Loading...</div>
-
         return (
-            <div style={myStyle} className="my-style">
-                <div className="my-style-2">
-                    <div className="phrase">{items.phrase}</div>
-                    <svg
-                        className="refresh animate rotate"
-                        onClick={this.theFetch}
-                        enableBackground="new 0 0 551.13 551.13"
-                        viewBox="0 0 551.13 551.13"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="m482.239 310.011c0 113.966-92.707 206.674-206.674 206.674s-206.674-92.708-206.674-206.674c0-102.208 74.639-187.086 172.228-203.562v65.78l86.114-86.114-86.114-86.115v71.641c-116.653 16.802-206.673 117.139-206.673 238.37 0 132.955 108.164 241.119 241.119 241.119s241.119-108.164 241.119-241.119z" />
-                    </svg>
+            <ErrorBoundary>
+                <div style={myStyle} className={`my-style ${this.state.fadeOut ? 'fade-out' : ''}`}>
+                    <div className="my-style-2">
+                        <div className="phrase">{items.phrase}</div>
+                        <button 
+                            onClick={this.theFetch}
+                            className="refresh-button"
+                        >
+                            {this.buttonTexts[this.state.currentButtonTextIndex]}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        );
-
-    }
-
-}
+            </ErrorBoundary>
+        )
+    }}
 
 export default App

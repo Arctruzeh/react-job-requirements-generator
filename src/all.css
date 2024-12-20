@@ -10,19 +10,26 @@
     align-items: center;
     background-repeat: no-repeat;
     background-size: cover;
+    transition: all 0.8s ease-in-out;
+    opacity: 1;
 }
 
+.fade-out {
+    opacity: 0;
+}
 .my-style-2 {
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 75%;
-    height: 75%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    padding: 10px;
-
+    width: calc(100% - 80px);
+    height: calc(100vh - 80px);
+    margin: 40px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 
 .phrase {
@@ -31,20 +38,55 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 60px;
 }
 
-.refresh {
-    transition: transform 0.5s ease;
-    height: 10%;
-    width: 10%;
-    flex: 1;
+@media screen and (max-width: 1024px) {
+    .phrase {
+        font-size: 1.5em;
+    }
 }
 
-.animate {
-    -moz-transition: -moz-transform 0.5s ease;
-    -o-transition: -o-transform 0.5s ease;
-    -webkit-transition: -webkit-transform 0.5s ease;
-    transition: transform 0.5s ease;
+@media screen and (max-width: 768px) {
+    .phrase {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .phrase {
+        font-size: 1em;
+        padding: 20px 30px;
+    }
+}
+.refresh-button {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    background-color: #1a73e8;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-button:hover {
+    background-color: #1557b0;
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-button:active {
+    transform: translateX(-50%) translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .rotate:active {
@@ -52,4 +94,14 @@
     -ms-transform: rotate(360deg);
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+}
+
+.error-message {
+    padding: 20px;
+    background-color: #ffebee;
+    color: #c62828;
+    border-radius: 4px;
+    text-align: center;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
