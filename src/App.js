@@ -22,6 +22,7 @@ class ErrorBoundary extends React.Component {
 }
 
 class App extends React.Component {
+    FADE_DURATION = 300; // in milliseconds, match this with CSS transition duration
     buttonTexts = [
         "Synergize Content",
         "Ideate Solutions",
@@ -33,8 +34,7 @@ class App extends React.Component {
         "Accelerate Growth",
         "Transform Paradigms",
         "Maximize Potential"
-    ]    
-
+    ]
     constructor(props) {
         super(props)
         this.state = {
@@ -85,6 +85,7 @@ class App extends React.Component {
     }
 
     theFetch = async () => {
+        // Start fade out
         this.setState({ 
             fadeOut: true,
             isLoaded: false,
@@ -92,24 +93,32 @@ class App extends React.Component {
             currentButtonTextIndex: (this.state.currentButtonTextIndex + 1) % this.buttonTexts.length
         })
         
-        setTimeout(() => {
-            if (this.state.nextPhrase && this.state.nextImageUrl) {
-                this.setState({
-                    items: { phrase: this.state.nextPhrase },
-                    imgUrl: this.state.nextImageUrl,
-                    nextPhrase: null,
-                    nextImageUrl: null,
-                    fadeOut: false,
-                    isLoaded: true,
-                    isLoaded2: true
-                })
-                this.prefetchNext()
-            }
-        }, 1000)
+        // Wait for fade out animation to complete
+        await new Promise(resolve => setTimeout(resolve, this.FADE_DURATION))
+        
+        // If we don't have next content ready, wait for it
+        if (!this.state.nextPhrase || !this.state.nextImageUrl) {
+            await this.prefetchNext()
+        }
+        
+        // Update with new content
+        this.setState({
+            items: { phrase: this.state.nextPhrase },
+            imgUrl: this.state.nextImageUrl,
+            nextPhrase: null,
+            nextImageUrl: null,
+            fadeOut: false,
+            isLoaded: true,
+            isLoaded2: true
+        })
+        
+        // Start prefetching next content
+        this.prefetchNext()
     }
+
     componentDidMount() {
         this.theFetch()
-        this.prefetchNext() // Start prefetching for next click
+        this.prefetchNext(); // Start prefetching for next click
     }
 
     render() {
