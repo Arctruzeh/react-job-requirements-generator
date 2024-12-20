@@ -89,8 +89,7 @@ class App extends React.Component {
         this.setState({ 
             fadeOut: true,
             isLoaded: false,
-            isLoaded2: false,
-            currentButtonTextIndex: (this.state.currentButtonTextIndex + 1) % this.buttonTexts.length
+            isLoaded2: false
         })
         
         // Wait for fade out animation to complete
@@ -101,7 +100,7 @@ class App extends React.Component {
             await this.prefetchNext()
         }
         
-        // Update with new content
+        // Update all content together, including button text
         this.setState({
             items: { phrase: this.state.nextPhrase },
             imgUrl: this.state.nextImageUrl,
@@ -109,13 +108,13 @@ class App extends React.Component {
             nextImageUrl: null,
             fadeOut: false,
             isLoaded: true,
-            isLoaded2: true
+            isLoaded2: true,
+            currentButtonTextIndex: (this.state.currentButtonTextIndex + 1) % this.buttonTexts.length
         })
         
         // Start prefetching next content
         this.prefetchNext()
     }
-
     componentDidMount() {
         this.theFetch()
         this.prefetchNext(); // Start prefetching for next click
