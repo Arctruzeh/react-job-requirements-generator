@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Corporate Responsibility Generator
+Generates random corporate responsibility statements with matching backgrounds. Utilizes ReactJS and multiple APIs.
 
-## Live demo:
-https://aj-job-requirements.netlify.app/
+## Live Demos:
+- **Railway (Production):** https://react-job-requirements-generator-production.up.railway.app/
+- **Netlify (Alternative):** https://aj-job-requirements.netlify.app/
