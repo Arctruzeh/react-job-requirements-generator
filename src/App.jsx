@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './all.css'
+import BackToPortfolio from './BackToPortfolio'
 import { BiRefresh } from 'react-icons/bi'
 
 // Error Boundary Component
@@ -150,6 +151,7 @@ const App = () => {
                         <BiRefresh className="button-icon" />
                         {BUTTON_TEXTS[currentButtonTextIndex]}
                     </button>
+                    <BackToPortfolio />
                 </div>
             </div>
         </ErrorBoundary>
