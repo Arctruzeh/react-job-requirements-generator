@@ -2,5 +2,5 @@
 Generates random corporate responsibility statements with matching backgrounds. Utilizes ReactJS and multiple APIs.
 
 ## Live Demos:
-- **Railway (Production):** https://react-job-requirements-generator-production.up.railway.app/
+- **Railway (Production):** https://ajlato-job-requirements-generator.up.railway.app/
 - **Netlify (Alternative):** https://aj-job-requirements.netlify.app/
